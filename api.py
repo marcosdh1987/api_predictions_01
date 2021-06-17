@@ -11,32 +11,3 @@ app = Flask(__name__)
 @app.route("/")
 def hello():
     return "I'm an API for predictions"
-
-@app.route('/predict', methods=['POST'])
-def predict():
-    lr = joblib.load("model.pkl") # Load "model.pkl"
-    print ('Model loaded')
-    model_columns = joblib.load("model_columns.pkl") # Load "model_columns.pkl"
-    print ('Model columns loaded')
-    
-    if lr:
-        try:
-            json_ = request.json
-            
-            query = pd.get_dummies(pd.DataFrame(json_))
-            
-            #query = query.reindex(columns=['Age', 'Embarked_C', 'Embarked_Q', 'Embarked_S', 'Embarked_nan',
-            #'Sex_female', 'Sex_male', 'Sex_nan'], fill_value=0)
-            query = query.reindex(columns=model_columns, fill_value=0)
-            
-            prediction = list(lr.predict(query))
-
-            return jsonify({'prediction': str(prediction)})
-
-        except:
-
-            return jsonify({'trace': traceback.format_exc()})
-    else:
-        print ('Train the model first')
-        return ('No model here to use')
-
