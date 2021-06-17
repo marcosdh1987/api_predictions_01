@@ -4,7 +4,6 @@ from flask import Flask, request, jsonify
 import joblib
 import traceback
 import pandas as pd
-import numpy as np
 
 # Your API definition
 app = Flask(__name__)
@@ -37,10 +36,6 @@ def predict():
         return ('No model here to use')
 
 if __name__ == '__main__':
-    try:
-        port = int(sys.argv[1]) # This is for a command-line input
-    except:
-        port = 12345 # If you don't provide any port the port will be set to 12345
 
     lr = joblib.load("model.pkl") # Load "model.pkl"
     print ('Model loaded')
