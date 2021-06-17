@@ -1,8 +1,8 @@
 # Dependencies
-from os import sys
+
 from flask import Flask, request, jsonify
 import joblib
-import traceback
+
 import pandas as pd
 
 # Your API definition
